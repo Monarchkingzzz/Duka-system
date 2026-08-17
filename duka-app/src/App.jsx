@@ -3,7 +3,7 @@ import "./App.css";
 import { supabase } from "./lib/supabase";
 import {
   Home, Package, ShoppingCart, Receipt, BarChart3, Users, Wifi, WifiOff,
-  Plus, Trash2, LogOut, AlertTriangle, TrendingUp, Banknote, X, ChevronDown,
+  Plus, Trash2, LogOut, AlertTriangle, TrendingUp, TrendingDown, Banknote, X, ChevronDown,
   ChevronRight, Clock, Lock, Search, Bell, ArrowUpRight, ArrowDownRight,
   MoreHorizontal, Minus, Check, CreditCard, Smartphone, Wallet, RefreshCw,
   CalendarDays, CircleDollarSign, Boxes, UserRound, Settings, Zap,
@@ -825,6 +825,8 @@ function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavig
         isOwner={true}
         todayRevenue={todayRevenue}
         todayProfit={todayProfit}
+        todayExpenses={todayExpenseTotal}
+        todayCOGS={todayCOGS}
         todaySalesCount={todaySales.length}
         lowStockCount={lowStock.length}
         onNavigate={onNavigate}
@@ -833,8 +835,22 @@ function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavig
       />
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-5 relative z-10">
         <StatCard label="Today's sales" value={ksh(todayRevenue)} sub={`${todaySales.length} transactions`} icon={Banknote} tone="emerald" trend="Today" />
-        <StatCard label="Estimated profit" value={ksh(todayProfit)} sub={todayRevenue ? `${Math.round((todayProfit / todayRevenue) * 100)}% margin` : isLoss ? "In the red" : "No sales yet"} icon={TrendingUp} tone={todayProfit >= 0 ? "emerald" : "rose"} />
-        <StatCard label="Today's expenses" value={ksh(todayExpenseTotal)} icon={Receipt} tone="rose" />
+        <StatCard
+          label={todayProfit < 0 ? "Today's Net Loss" : "Today's Net Profit"}
+          value={(todayProfit < 0 ? "− " : "+ ") + ksh(Math.abs(todayProfit))}
+          sub={
+            todayRevenue
+              ? (todayProfit < 0
+                  ? `Loss: ${Math.round((Math.abs(todayProfit) / todayRevenue) * 100)}% negative margin`
+                  : `${Math.round((todayProfit / todayRevenue) * 100)}% profit margin`)
+              : isLoss
+              ? "Expenses exceed sales"
+              : "No sales yet"
+          }
+          icon={todayProfit < 0 ? TrendingDown : TrendingUp}
+          tone={todayProfit >= 0 ? "emerald" : "rose"}
+        />
+        <StatCard label="Today's expenses" value={ksh(todayExpenseTotal)} icon={Receipt} tone="rose" sub="Operating expenses" />
         <StatCard label="Low stock" value={lowStock.length} sub={`${products.length} products total`} icon={AlertTriangle} tone="amber" />
       </div>
 

@@ -375,6 +375,14 @@ select.in {
   animation: sphere-float 4.5s ease-in-out infinite alternate;
 }
 
+.greeting-3d-sphere-loss {
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(244, 63, 94, 0.85) 45%, rgba(190, 18, 60, 0.95) 85%, rgba(136, 19, 55, 1) 100%) !important;
+  box-shadow: 0 15px 30px -8px rgba(225, 29, 72, 0.6), 
+              0 0 20px 2px rgba(251, 113, 133, 0.4),
+              inset 0 4px 10px rgba(255, 255, 255, 0.6),
+              inset 0 -6px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
 @keyframes sphere-float {
   0% {
     transform: translateY(0px) rotate(0deg);

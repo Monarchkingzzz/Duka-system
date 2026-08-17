@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Sun, Moon, Sunrise, Sunset, Sparkles, Clock, TrendingUp,
+  Sun, Moon, Sunrise, Sunset, Sparkles, Clock, TrendingUp, TrendingDown,
   Plus, Crown, ShieldCheck, Flame, ShoppingBag, DollarSign,
-  Activity, Palette, ArrowUpRight, Zap
+  Activity, Palette, ArrowUpRight, ArrowDownRight, Zap, AlertTriangle, CheckCircle2
 } from "lucide-react";
 
 export default function GreetingHero({
@@ -10,6 +10,8 @@ export default function GreetingHero({
   isOwner = true,
   todayRevenue = 0,
   todayProfit = 0,
+  todayExpenses = 0,
+  todayCOGS = 0,
   todaySalesCount = 0,
   lowStockCount = 0,
   onNavigate,
@@ -32,15 +34,14 @@ export default function GreetingHero({
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left; // x position within element
-    const y = e.clientY - rect.top;  // y position within element
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Max tilt angles: 7deg X, 8deg Y
-    const rotateX = ((y - centerY) / centerY) * -6;
-    const rotateY = ((x - centerX) / centerX) * 6;
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
 
     setTilt({ x: rotateX, y: rotateY, active: true });
   };
@@ -55,7 +56,7 @@ export default function GreetingHero({
     formattedTime,
     formattedDate,
     seconds,
-    subtext,
+    subtext: defaultSubtext,
     pillText,
     icon: TimeIcon,
     gradientTheme,
@@ -63,7 +64,22 @@ export default function GreetingHero({
   } = timeState;
 
   const isLoss = todayProfit < 0;
+  const isProfit = todayProfit > 0;
+  const isBreakEven = todayProfit === 0;
+  const profitMargin = todayRevenue > 0 ? Math.round((todayProfit / todayRevenue) * 100) : 0;
   const displayName = user?.name && user.name !== "You" && user.name !== "owner" ? user.name.split(" ")[0] : (isOwner ? "Maurice" : "Staff");
+
+  // Tailored Profit vs Loss Owner Narrative
+  let ownerNarrative = defaultSubtext;
+  if (isOwner) {
+    if (isLoss) {
+      ownerNarrative = `⚠️ Attention Maurice: Store is operating at a Net Loss of -KSh ${Math.round(Math.abs(todayProfit)).toLocaleString("en-KE")} today. Recorded expenses (KSh ${Math.round(todayExpenses).toLocaleString("en-KE")}) and product buying costs exceed today's sales revenue.`;
+    } else if (isProfit) {
+      ownerNarrative = `🎉 Great job Maurice! Your store has generated a Net Profit of +KSh ${Math.round(todayProfit).toLocaleString("en-KE")} (${profitMargin}% margin) from KSh ${Math.round(todayRevenue).toLocaleString("en-KE")} in total sales today.`;
+    } else {
+      ownerNarrative = `Maurice, your store is currently at break-even (KSh 0 net profit). Ring up new sales to generate profit for today.`;
+    }
+  }
 
   return (
     <div className="relative mb-6 select-none" style={{ perspective: "1400px" }}>
@@ -78,41 +94,77 @@ export default function GreetingHero({
             : "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
           transition: tilt.active ? "transform 0.1s ease-out" : "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)"
         }}
-        className={`greeting-3d-card relative overflow-hidden rounded-3xl p-6 sm:p-7 border border-white/40 shadow-2xl transition-all duration-300 ${gradientTheme}`}
+        className={`greeting-3d-card relative overflow-hidden rounded-3xl p-6 sm:p-7 border shadow-2xl transition-all duration-300 ${gradientTheme} ${
+          isOwner && isLoss ? "border-rose-400/50 dark:border-rose-500/40" : "border-white/40 dark:border-stone-700/60"
+        }`}
       >
         {/* Specular Light Sheen Overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/25 opacity-70 mix-blend-overlay rounded-3xl" />
 
         {/* Ambient Floating 3D Spheres in Background */}
         <div
-          className={`pointer-events-none absolute -top-16 -right-12 w-64 h-64 rounded-full blur-2xl opacity-60 transition-all duration-700 ${orbGlow}`}
+          className={`pointer-events-none absolute -top-16 -right-12 w-64 h-64 rounded-full blur-2xl opacity-60 transition-all duration-700 ${
+            isOwner && isLoss ? "bg-rose-500/30" : orbGlow
+          }`}
         />
         <div
-          className="pointer-events-none absolute -bottom-16 -left-10 w-48 h-48 rounded-full bg-emerald-400/20 blur-2xl opacity-50"
+          className={`pointer-events-none absolute -bottom-16 -left-10 w-48 h-48 rounded-full blur-2xl opacity-50 ${
+            isOwner && isLoss ? "bg-rose-400/20" : "bg-emerald-400/20"
+          }`}
         />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           {/* Left Column: Greeting, Live Clock & Narrative */}
-          <div className="space-y-3 flex-1 min-w-0" style={{ transform: "translateZ(30px)" }}>
+          <div className="space-y-3.5 flex-1 min-w-0" style={{ transform: "translateZ(30px)" }}>
             {/* Top Badges Row */}
             <div className="flex items-center gap-2 flex-wrap">
               {/* Role / Tier Badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-stone-900/80 text-amber-300 backdrop-blur-md border border-amber-400/30 shadow-sm">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-stone-900/85 text-amber-300 backdrop-blur-md border border-amber-400/30 shadow-sm">
                 {isOwner ? <Crown size={13} className="text-amber-400 animate-bounce" /> : <ShieldCheck size={13} className="text-emerald-400" />}
-                <span>{isOwner ? "Store Owner & Admin" : "Sales Cashier"}</span>
+                <span>{isOwner ? "Store Owner & Admin" : "Sales Staff"}</span>
               </div>
 
-              {/* Time of Day Pill with live pulsing indicator */}
+              {/* Dynamic Real-time Profit / Loss Indicator Pill for Owner */}
+              {isOwner && (
+                <div
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md shadow-sm transition-all ${
+                    isLoss
+                      ? "bg-rose-500/20 text-rose-800 dark:text-rose-200 border border-rose-500/40 animate-pulse"
+                      : isProfit
+                      ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-500/40"
+                      : "bg-stone-500/20 text-stone-700 dark:text-stone-300 border border-stone-400/30"
+                  }`}
+                >
+                  {isLoss ? (
+                    <>
+                      <AlertTriangle size={13} className="text-rose-600 dark:text-rose-400" />
+                      <span>🔴 Loss Made: -KSh {Math.round(Math.abs(todayProfit)).toLocaleString("en-KE")}</span>
+                    </>
+                  ) : isProfit ? (
+                    <>
+                      <TrendingUp size={13} className="text-emerald-600 dark:text-emerald-400" />
+                      <span>🟢 Profit Made: +KSh {Math.round(todayProfit).toLocaleString("en-KE")} ({profitMargin}%)</span>
+                    </>
+                  ) : (
+                    <>
+                      <Activity size={13} className="text-stone-500" />
+                      <span>⚪ Break-even (KSh 0 Profit)</span>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* Time of Day Pill */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/70 dark:bg-stone-900/60 backdrop-blur-md border border-white/60 dark:border-stone-700/60 text-stone-800 dark:text-stone-200 shadow-2xs">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isLoss ? "bg-rose-400" : "bg-emerald-400"}`} />
+                  <span className={`relative inline-flex rounded-full h-2 w-2 ${isLoss ? "bg-rose-500" : "bg-emerald-500"}`} />
                 </span>
                 <span>{pillText}</span>
               </div>
 
-              {/* Live Real-time Kenya Clock */}
-              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-stone-900/60 text-white backdrop-blur-md border border-white/20 shadow-2xs">
+              {/* Live Real-time Clock */}
+              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-stone-900/70 text-white backdrop-blur-md border border-white/20 shadow-2xs">
                 <Clock size={12} className="text-emerald-400" />
                 <span>{formattedTime}</span>
                 <span className="text-[10px] text-emerald-400 opacity-80">:{seconds}</span>
@@ -128,32 +180,62 @@ export default function GreetingHero({
                 <span className="inline-block animate-wave origin-[70%_70%] text-2xl sm:text-3xl">👋</span>
               </h1>
               
-              <p className="text-xs sm:text-sm font-medium text-stone-600 dark:text-stone-300 max-w-xl leading-relaxed">
-                {subtext}
+              {/* Highlighted Status Narrative */}
+              <p className={`text-xs sm:text-sm font-medium leading-relaxed max-w-2xl ${
+                isOwner && isLoss
+                  ? "text-rose-900 dark:text-rose-200 font-semibold"
+                  : "text-stone-700 dark:text-stone-300"
+              }`}>
+                {ownerNarrative}
               </p>
             </div>
 
-            {/* Quick Live Performance Ticker inside the Greeting for Owner */}
+            {/* Visual Profit & Loss Breakdown Ribbon for Owner */}
             {isOwner && (
-              <div className="pt-1 flex items-center gap-4 flex-wrap text-xs font-semibold text-stone-700 dark:text-stone-200">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/60 dark:bg-stone-800/60 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm">
-                  <Flame size={13} className="text-amber-500" />
-                  <span>Today's Sales:</span>
-                  <span className="text-emerald-700 dark:text-emerald-400 font-bold font-mono">
-                    KSh {Math.round(todayRevenue).toLocaleString("en-KE")}
-                  </span>
+              <div className="pt-1.5 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-2xl text-xs">
+                {/* 1. Sales Revenue */}
+                <div className="p-2 rounded-xl bg-white/70 dark:bg-stone-800/70 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm">
+                  <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">1. Sales Revenue</div>
+                  <div className="text-sm font-bold font-mono text-emerald-700 dark:text-emerald-400 mt-0.5">
+                    +KSh {Math.round(todayRevenue).toLocaleString("en-KE")}
+                  </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/60 dark:bg-stone-800/60 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm">
-                  <TrendingUp size={13} className={isLoss ? "text-rose-500" : "text-emerald-600"} />
-                  <span>Net Profit:</span>
-                  <span className={`font-bold font-mono ${isLoss ? "text-rose-600 dark:text-rose-400" : "text-emerald-700 dark:text-emerald-400"}`}>
-                    {isLoss ? "-" : "+"}KSh {Math.round(Math.abs(todayProfit)).toLocaleString("en-KE")}
-                  </span>
+                {/* 2. Buying Cost (COGS) */}
+                <div className="p-2 rounded-xl bg-white/70 dark:bg-stone-800/70 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm">
+                  <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">2. Buying Cost</div>
+                  <div className="text-sm font-bold font-mono text-stone-600 dark:text-stone-300 mt-0.5">
+                    −KSh {Math.round(todayCOGS).toLocaleString("en-KE")}
+                  </div>
                 </div>
 
-                <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/60 dark:bg-stone-800/60 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm text-stone-500 dark:text-stone-400">
-                  <span>{formattedDate}</span>
+                {/* 3. Expenses */}
+                <div className="p-2 rounded-xl bg-white/70 dark:bg-stone-800/70 border border-white/60 dark:border-stone-700/50 backdrop-blur-sm">
+                  <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">3. Day Expenses</div>
+                  <div className="text-sm font-bold font-mono text-rose-600 dark:text-rose-400 mt-0.5">
+                    −KSh {Math.round(todayExpenses).toLocaleString("en-KE")}
+                  </div>
+                </div>
+
+                {/* 4. Net Profit / Loss Result */}
+                <div className={`p-2 rounded-xl border backdrop-blur-sm shadow-2xs ${
+                  isLoss
+                    ? "bg-rose-100/90 dark:bg-rose-950/60 border-rose-300 dark:border-rose-800/60"
+                    : isProfit
+                    ? "bg-emerald-100/90 dark:bg-emerald-950/60 border-emerald-300 dark:border-emerald-800/60"
+                    : "bg-white/70 dark:bg-stone-800/70 border-white/60 dark:border-stone-700/50"
+                }`}>
+                  <div className="text-[10px] uppercase tracking-wider font-bold flex items-center justify-between">
+                    <span className={isLoss ? "text-rose-800 dark:text-rose-300" : isProfit ? "text-emerald-800 dark:text-emerald-300" : "text-stone-500"}>
+                      {isLoss ? "Net Loss" : isProfit ? "Net Profit" : "Break-even"}
+                    </span>
+                    {isLoss ? <TrendingDown size={12} className="text-rose-600" /> : <TrendingUp size={12} className="text-emerald-600" />}
+                  </div>
+                  <div className={`text-sm font-extrabold font-mono mt-0.5 ${
+                    isLoss ? "text-rose-700 dark:text-rose-300" : isProfit ? "text-emerald-700 dark:text-emerald-300" : "text-stone-700"
+                  }`}>
+                    {isLoss ? "−" : "+"}KSh {Math.round(Math.abs(todayProfit)).toLocaleString("en-KE")}
+                  </div>
                 </div>
               </div>
             )}
@@ -161,13 +243,17 @@ export default function GreetingHero({
 
           {/* Right Column: 3D Holographic Floating Sphere & Quick Actions */}
           <div className="flex flex-row lg:flex-col items-center lg:items-end justify-between gap-4 shrink-0" style={{ transform: "translateZ(50px)" }}>
-            {/* 3D Visual Elemental Sphere representing time of day */}
+            {/* 3D Visual Elemental Sphere representing time of day / store health */}
             <div className="greeting-3d-sphere-wrapper relative group cursor-pointer" title={`Current Status: ${pillText}`}>
               {/* Outer Orbit Light Ring */}
-              <div className="absolute -inset-2 rounded-full border border-white/40 border-dashed animate-spin-slow pointer-events-none" />
+              <div className={`absolute -inset-2 rounded-full border border-dashed animate-spin-slow pointer-events-none ${
+                isLoss ? "border-rose-400/60" : "border-white/40"
+              }`} />
               
               {/* Core 3D Shimmering Glass Sphere */}
-              <div className="greeting-3d-sphere w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden transition-transform duration-500 group-hover:scale-110">
+              <div className={`greeting-3d-sphere w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden transition-transform duration-500 group-hover:scale-110 ${
+                isLoss ? "greeting-3d-sphere-loss" : ""
+              }`}>
                 {/* 3D Specular Highlight & Glass Curvature */}
                 <div className="absolute top-1 left-2 w-7 h-4 rounded-full bg-white/60 blur-[1px] rotate-[-25deg]" />
                 <div className="absolute bottom-1 right-2 w-9 h-5 rounded-full bg-black/20 blur-[2px]" />
@@ -183,8 +269,10 @@ export default function GreetingHero({
               </div>
 
               {/* Mini Status Tag floating below 3D Sphere */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-stone-900/90 text-white text-[9px] font-bold tracking-wider uppercase border border-white/20 shadow-md">
-                {period}
+              <div className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-full text-white text-[9px] font-bold tracking-wider uppercase border shadow-md ${
+                isLoss ? "bg-rose-900 border-rose-400/40" : "bg-stone-900/90 border-white/20"
+              }`}>
+                {isLoss ? "Loss Alert" : period}
               </div>
             </div>
 
