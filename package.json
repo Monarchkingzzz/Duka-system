@@ -1,0 +1,10 @@
+{
+  "name": "duka-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix duka-app run dev",
+    "build": "npm --prefix duka-app run build",
+    "start": "npm --prefix duka-app run preview"
+  }
+}
