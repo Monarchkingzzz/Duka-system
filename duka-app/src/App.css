@@ -279,3 +279,137 @@ select.in {
     transform: scale(1.01);
   }
 }
+
+/* ----------------------------------------------------
+   3D Real-Time Greeting Hero Banner Styles
+---------------------------------------------------- */
+.greeting-3d-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+}
+
+.greeting-3d-text {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Light Theme Time-based Gradients */
+.greeting-gradient-morning {
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.85) 0%, rgba(209, 250, 229, 0.8) 50%, rgba(253, 230, 138, 0.6) 100%);
+  border-color: rgba(251, 191, 36, 0.4) !important;
+}
+
+.greeting-gradient-afternoon {
+  background: linear-gradient(135deg, rgba(209, 250, 229, 0.85) 0%, rgba(224, 242, 254, 0.8) 50%, rgba(167, 243, 208, 0.65) 100%);
+  border-color: rgba(52, 211, 153, 0.4) !important;
+}
+
+.greeting-gradient-evening {
+  background: linear-gradient(135deg, rgba(255, 237, 213, 0.85) 0%, rgba(254, 215, 170, 0.8) 50%, rgba(254, 205, 211, 0.65) 100%);
+  border-color: rgba(251, 146, 60, 0.4) !important;
+}
+
+.greeting-gradient-night {
+  background: linear-gradient(135deg, rgba(224, 231, 255, 0.85) 0%, rgba(209, 250, 229, 0.8) 50%, rgba(199, 210, 254, 0.65) 100%);
+  border-color: rgba(129, 140, 248, 0.4) !important;
+}
+
+/* Dark Theme Overrides for Time-based Gradients */
+[data-theme="dark"] .greeting-3d-card,
+[data-theme="midnight"] .greeting-3d-card,
+[data-theme="cyber"] .greeting-3d-card,
+[data-theme="amethyst"] .greeting-3d-card,
+[data-theme="coffee"] .greeting-3d-card {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+[data-theme="dark"] .greeting-gradient-morning,
+[data-theme="midnight"] .greeting-gradient-morning,
+[data-theme="cyber"] .greeting-gradient-morning,
+[data-theme="amethyst"] .greeting-gradient-morning,
+[data-theme="coffee"] .greeting-gradient-morning {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(217, 119, 6, 0.22) 50%, rgba(16, 185, 129, 0.18) 100%) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+[data-theme="dark"] .greeting-gradient-afternoon,
+[data-theme="midnight"] .greeting-gradient-afternoon,
+[data-theme="cyber"] .greeting-gradient-afternoon,
+[data-theme="amethyst"] .greeting-gradient-afternoon,
+[data-theme="coffee"] .greeting-gradient-afternoon {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(16, 185, 129, 0.25) 50%, rgba(6, 182, 212, 0.2) 100%) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+[data-theme="dark"] .greeting-gradient-evening,
+[data-theme="midnight"] .greeting-gradient-evening,
+[data-theme="cyber"] .greeting-gradient-evening,
+[data-theme="amethyst"] .greeting-gradient-evening,
+[data-theme="coffee"] .greeting-gradient-evening {
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.85) 0%, rgba(234, 88, 12, 0.25) 50%, rgba(225, 29, 72, 0.2) 100%) !important;
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+[data-theme="dark"] .greeting-gradient-night,
+[data-theme="midnight"] .greeting-gradient-night,
+[data-theme="cyber"] .greeting-gradient-night,
+[data-theme="amethyst"] .greeting-gradient-night,
+[data-theme="coffee"] .greeting-gradient-night {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(99, 102, 241, 0.25) 50%, rgba(16, 185, 129, 0.18) 100%) !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+/* 3D Celestial Floating Sphere */
+.greeting-3d-sphere-wrapper {
+  perspective: 600px;
+}
+
+.greeting-3d-sphere {
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(16, 185, 129, 0.85) 45%, rgba(4, 120, 87, 0.95) 85%, rgba(6, 78, 59, 1) 100%);
+  box-shadow: 0 15px 30px -8px rgba(5, 150, 105, 0.6), 
+              0 0 20px 2px rgba(52, 211, 153, 0.4),
+              inset 0 4px 10px rgba(255, 255, 255, 0.6),
+              inset 0 -6px 14px rgba(0, 0, 0, 0.4);
+  animation: sphere-float 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes sphere-float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-6px) rotate(4deg);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  20%, 60% {
+    transform: rotate(14deg);
+  }
+  40%, 80% {
+    transform: rotate(-10deg);
+  }
+}
+
+.animate-wave {
+  animation: wave 2.2s infinite;
+}
+

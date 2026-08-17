@@ -17,6 +17,7 @@ import {
   getSavedTheme, saveTheme, applyThemeToDOM, getThemeById, getOppositeModeTheme, THEMES
 } from "./lib/themes";
 import ThemeModal from "./components/ThemeModal";
+import GreetingHero from "./components/GreetingHero";
 
 // ---------- helpers ----------
 const ksh = (n) => "KSh " + Math.round(n).toLocaleString("en-KE");
@@ -421,7 +422,7 @@ export default function App() {
         </header>
 
         <main className="flex-1 p-5 sm:p-7 overflow-auto duka-responsive-main">
-          {tab === "dashboard" && <Dashboard products={products} events={events} expenses={expenses} stockOf={stockOf} isOwner={isOwner} user={user} onNavigate={setTab} themeObj={activeThemeObj} />}
+          {tab === "dashboard" && <Dashboard products={products} events={events} expenses={expenses} stockOf={stockOf} isOwner={isOwner} user={user} onNavigate={setTab} themeObj={activeThemeObj} onOpenThemes={() => setShowThemeModal(true)} />}
           {tab === "sales" && <Sales products={products} stockOf={stockOf} events={events} addEvent={addEvent} user={user} online={online} showToast={showToast} onNavigate={setTab} />}
           {tab === "products" && <Products products={products} setProducts={setProducts} stockOf={stockOf} events={events} addEvent={addEvent} isOwner={isOwner} user={user} online={online} showToast={showToast} />}
           {tab === "expenses" && isOwner && <Expenses expenses={expenses} setExpenses={setExpenses} user={user} online={online} showToast={showToast} />}
@@ -506,7 +507,7 @@ function RoleButton({ onClick, initials, name, role, description }) {
 }
 
 // ---------- dashboard ----------
-function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavigate, themeObj }) {
+function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavigate, themeObj, onOpenThemes }) {
   const today = dayKey(new Date());
   const [shiftFilter, setShiftFilter] = useState("today"); // 'today' | 'all'
   const [searchSaleQuery, setSearchSaleQuery] = useState("");
@@ -564,12 +565,16 @@ function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavig
 
   if (!isOwner) return (
     <div className="max-w-6xl mx-auto space-y-6">
-      <PageIntro
-        eyebrow="Staff Workspace"
-        title={`Good day, ${user.name.split(" ")[0]} 👋`}
-        text="Here is your shift overview, sales recorded, and goods breakdown."
-        action="Record a sale"
-        onAction={() => onNavigate("sales")}
+      <GreetingHero
+        user={user}
+        isOwner={false}
+        todayRevenue={myTodayRevenue}
+        todayProfit={0}
+        todaySalesCount={myTodaySales.length}
+        lowStockCount={lowStock.length}
+        onNavigate={onNavigate}
+        onOpenThemes={onOpenThemes}
+        themeObj={themeObj}
       />
 
       {/* Metrics Row for Staff */}
@@ -815,29 +820,16 @@ function Dashboard({ products, events, expenses, stockOf, isOwner, user, onNavig
         }}
       />
 
-      <PageIntro
-        eyebrow={new Date().toLocaleDateString("en-KE", { weekday: "long", day: "numeric", month: "long" })}
-        statusBadge={
-          isLoss ? (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100/90 text-rose-800 border border-rose-300 shadow-2xs animate-pulse">
-              <span className="h-1.5 w-1.5 rounded-full bg-rose-600 animate-ping" />
-              Loss Alert ({ksh(Math.abs(todayProfit))})
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100/90 text-emerald-800 border border-emerald-300 shadow-2xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
-              Profitable Day (+{ksh(todayProfit)})
-            </span>
-          )
-        }
-        title="Good morning, Owner 👋"
-        text={
-          isLoss
-            ? "Operating at a loss today: today's recorded expenses exceed sales revenue."
-            : "Here's your business snapshot and positive earnings for today."
-        }
-        action="New sale"
-        onAction={() => onNavigate("sales")}
+      <GreetingHero
+        user={user}
+        isOwner={true}
+        todayRevenue={todayRevenue}
+        todayProfit={todayProfit}
+        todaySalesCount={todaySales.length}
+        lowStockCount={lowStock.length}
+        onNavigate={onNavigate}
+        onOpenThemes={onOpenThemes}
+        themeObj={themeObj}
       />
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-5 relative z-10">
         <StatCard label="Today's sales" value={ksh(todayRevenue)} sub={`${todaySales.length} transactions`} icon={Banknote} tone="emerald" trend="Today" />
