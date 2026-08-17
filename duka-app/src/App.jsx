@@ -86,7 +86,7 @@ const seedProducts = [
 ];
 
 const employees = [
-  { id: "owner", name: "You", username: "owner", role: "Owner / Administrator" },
+  { id: "owner", name: "Maurice", username: "maurice", role: "Owner / Administrator" },
   { id: "john", name: "John Mwangi", username: "john", role: "Sales Staff" },
 ];
 
@@ -480,7 +480,7 @@ function Login({ onLogin, currentTheme, onToggleTheme, onOpenThemes }) {
           <div className="text-sm text-stone-500 mt-1">Sales, stock and business management in one place.</div>
         </div>
         <div className="bg-white border border-stone-200 rounded-2xl shadow-soft p-2 space-y-2">
-          <RoleButton onClick={() => onLogin(employees[0])} initials="YO" name="Continue as Owner" role="Full access" description="Sales, stock, expenses, reports and staff" />
+          <RoleButton onClick={() => onLogin(employees[0])} initials="MN" name="Continue as Maurice" role="Owner / Full access" description="Sales, stock, expenses, reports and staff" />
           <RoleButton onClick={() => onLogin(employees[1])} initials="JM" name="Continue as John Mwangi" role="Sales staff" description="Record sales and view stock" />
         </div>
         
@@ -2122,7 +2122,7 @@ function Reports({ products, events, expenses, stockOf, themeObj }) {
 
 // ---------- employees ----------
 function Employees({ list }) {
-  return <div className="max-w-5xl mx-auto"><PageIntro eyebrow="Access control" title="Employees" text="Keep track of who can use the system." /><div className="grid grid-cols-1 md:grid-cols-2 gap-4">{list.map((e) => { const owner = e.id === "owner"; return <div key={e.id} className="bg-white border border-stone-200 rounded-2xl p-5 shadow-card"><div className="flex items-start justify-between"><div className="flex items-center gap-3"><div className={`h-11 w-11 rounded-xl grid place-items-center text-xs font-bold ${owner ? "bg-stone-900 text-white" : "bg-emerald-50 text-emerald-700"}`}>{owner ? "YO" : "JM"}</div><div><div className="font-semibold">{e.name}</div><div className="text-xs text-stone-400">@{e.username}</div></div></div><span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${owner ? "bg-stone-100 text-stone-600" : "bg-emerald-50 text-emerald-700"}`}>{owner ? "Administrator" : "Sales staff"}</span></div><div className="mt-5 pt-4 border-t border-stone-100"><div className="text-[10px] uppercase tracking-wide text-stone-400 font-semibold mb-2">Permissions</div><div className="flex flex-wrap gap-2">{(owner ? ["Sales", "Inventory", "Expenses", "Reports", "Employees"] : ["Sales", "View inventory"]).map((x) => <span key={x} className="text-xs px-2.5 py-1.5 rounded-lg bg-stone-50 text-stone-600 border border-stone-100">{x}</span>)}</div></div></div>; })}</div><div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 flex gap-3"><Lock size={16} className="text-amber-700 mt-0.5" /><div><div className="text-sm font-semibold text-amber-900">Supabase will enforce these permissions later</div><div className="text-xs text-amber-800/80 mt-1">For now this is a local demo. In Phase 3, authentication and Row Level Security will protect the data at database level.</div></div></div></div>;
+  return <div className="max-w-5xl mx-auto"><PageIntro eyebrow="Access control" title="Employees" text="Keep track of who can use the system." /><div className="grid grid-cols-1 md:grid-cols-2 gap-4">{list.map((e) => { const owner = e.id === "owner"; return <div key={e.id} className="bg-white border border-stone-200 rounded-2xl p-5 shadow-card"><div className="flex items-start justify-between"><div className="flex items-center gap-3"><div className={`h-11 w-11 rounded-xl grid place-items-center text-xs font-bold ${owner ? "bg-stone-900 text-white" : "bg-emerald-50 text-emerald-700"}`}>{owner ? "MN" : "JM"}</div><div><div className="font-semibold">{e.name}</div><div className="text-xs text-stone-400">@{e.username}</div></div></div><span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${owner ? "bg-stone-100 text-stone-600" : "bg-emerald-50 text-emerald-700"}`}>{owner ? "Administrator" : "Sales staff"}</span></div><div className="mt-5 pt-4 border-t border-stone-100"><div className="text-[10px] uppercase tracking-wide text-stone-400 font-semibold mb-2">Permissions</div><div className="flex flex-wrap gap-2">{(owner ? ["Sales", "Inventory", "Expenses", "Reports", "Employees"] : ["Sales", "View inventory"]).map((x) => <span key={x} className="text-xs px-2.5 py-1.5 rounded-lg bg-stone-50 text-stone-600 border border-stone-100">{x}</span>)}</div></div></div>; })}</div><div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 flex gap-3"><Lock size={16} className="text-amber-700 mt-0.5" /><div><div className="text-sm font-semibold text-amber-900">Supabase will enforce these permissions later</div><div className="text-xs text-amber-800/80 mt-1">For now this is a local demo. In Phase 3, authentication and Row Level Security will protect the data at database level.</div></div></div></div>;
 }
 
 // ---------- shared UI ----------

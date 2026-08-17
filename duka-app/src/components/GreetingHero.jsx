@@ -63,7 +63,7 @@ export default function GreetingHero({
   } = timeState;
 
   const isLoss = todayProfit < 0;
-  const displayName = user?.name === "You" || !user?.name ? "Owner" : user.name.split(" ")[0];
+  const displayName = user?.name && user.name !== "You" && user.name !== "owner" ? user.name.split(" ")[0] : (isOwner ? "Maurice" : "Staff");
 
   return (
     <div className="relative mb-6 select-none" style={{ perspective: "1400px" }}>
