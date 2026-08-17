@@ -1,0 +1,281 @@
+/* Theme overrides & custom styles */
+[data-theme="dark"],
+[data-theme="midnight"],
+[data-theme="cyber"],
+[data-theme="amethyst"],
+[data-theme="coffee"] {
+  color-scheme: dark;
+}
+
+[data-theme="light"],
+[data-theme="pure-white"],
+[data-theme="sunset"],
+[data-theme="matcha"],
+[data-theme="nordic"] {
+  color-scheme: light;
+}
+
+/* Backgrounds & Surfaces */
+[data-theme]:not([data-theme="light"]) .bg-white {
+  background-color: var(--bg-surface) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .bg-white\/90 {
+  background-color: var(--bg-surface) !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme]:not([data-theme="light"]) .bg-white\/80 {
+  background-color: var(--bg-surface) !important;
+  backdrop-filter: blur(8px);
+}
+
+[data-theme]:not([data-theme="light"]) .bg-stone-50 {
+  background-color: var(--bg-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .bg-stone-50\/50 {
+  background-color: var(--bg-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .bg-stone-50\/80 {
+  background-color: var(--bg-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .bg-stone-100 {
+  background-color: var(--bg-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .hover\:bg-stone-50:hover {
+  background-color: var(--bg-subtle-hover) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .hover\:bg-stone-100:hover {
+  background-color: var(--bg-subtle-hover) !important;
+}
+
+/* Borders */
+[data-theme]:not([data-theme="light"]) .border-stone-200,
+[data-theme]:not([data-theme="light"]) .border-stone-200\/80,
+[data-theme]:not([data-theme="light"]) .border-stone-200\/60 {
+  border-color: var(--border-main) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .border-stone-100 {
+  border-color: var(--border-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .border-stone-50 {
+  border-color: var(--border-subtle) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .divide-stone-100 > :not([hidden]) ~ :not([hidden]),
+[data-theme]:not([data-theme="light"]) .divide-stone-200\/60 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border-subtle) !important;
+}
+
+/* Text Colors */
+[data-theme]:not([data-theme="light"]) .text-stone-900 {
+  color: var(--text-main) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .text-stone-800 {
+  color: var(--text-main) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .text-stone-700,
+[data-theme]:not([data-theme="light"]) .text-stone-600,
+[data-theme]:not([data-theme="light"]) .text-stone-500 {
+  color: var(--text-muted) !important;
+}
+
+[data-theme]:not([data-theme="light"]) .text-stone-400,
+[data-theme]:not([data-theme="light"]) .text-stone-300 {
+  color: var(--text-subtle) !important;
+}
+
+/* Primary Accents mapped to Theme CSS variables */
+.bg-emerald-700,
+.bg-emerald-800 {
+  background-color: var(--primary) !important;
+}
+.bg-emerald-700:hover,
+.bg-emerald-800:hover {
+  background-color: var(--primary-hover) !important;
+}
+
+.text-emerald-700,
+.text-emerald-800 {
+  color: var(--primary-text) !important;
+}
+
+.bg-emerald-50,
+.bg-emerald-50\/80,
+.bg-emerald-50\/60 {
+  background-color: var(--primary-light) !important;
+}
+
+.border-emerald-200,
+.border-emerald-100 {
+  border-color: var(--primary-border) !important;
+}
+
+.border-emerald-400,
+.border-emerald-500 {
+  border-color: var(--primary) !important;
+}
+
+.text-emerald-900 {
+  color: var(--primary-text) !important;
+}
+
+.focus\:border-emerald-500:focus,
+.focus\:border-emerald-400:focus {
+  border-color: var(--primary) !important;
+}
+
+.focus\:ring-emerald-500\/20:focus,
+.focus\:ring-emerald-50:focus {
+  box-shadow: 0 0 0 3px var(--primary-light) !important;
+}
+
+/* Inputs & Form Controls */
+.in {
+  border: 1px solid var(--border-main);
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-size: 14px;
+  width: 100%;
+  background: var(--bg-input) !important;
+  color: var(--text-main) !important;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+}
+
+.in:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px var(--primary-light) !important;
+}
+
+.in::placeholder {
+  color: var(--text-subtle) !important;
+}
+
+select.in {
+  cursor: pointer;
+}
+
+/* Shadows */
+.shadow-card {
+  box-shadow: var(--shadow-card) !important;
+}
+.shadow-soft {
+  box-shadow: var(--shadow-soft) !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-main);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-subtle);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Animations & Badges */
+@keyframes themePulse {
+  0% { transform: scale(0.98); opacity: 0.9; }
+  50% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.theme-card-active {
+  animation: themePulse 0.25s ease-out;
+}
+
+@media (max-width: 900px) {
+  .duka-responsive-main { padding: 1rem !important; }
+}
+
+@media (max-width: 720px) {
+  .duka-sidebar { width: 72px !important; }
+  .duka-sidebar-label { display: none !important; }
+  .duka-nav-button { justify-content: center !important; padding-left: .75rem !important; padding-right: .75rem !important; }
+}
+
+/* Owner Dashboard Profit vs Loss Ambient Background Glow */
+.owner-dashboard-container {
+  position: relative;
+  border-radius: 1.5rem;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.owner-profit-backdrop::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  height: 480px;
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.04) 55%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 2rem;
+  filter: blur(8px);
+  transition: background 0.8s ease, opacity 0.8s ease;
+}
+
+.owner-loss-backdrop::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  height: 480px;
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(239, 68, 68, 0.18) 0%, rgba(239, 68, 68, 0.05) 55%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 2rem;
+  filter: blur(8px);
+  transition: background 0.8s ease, opacity 0.8s ease;
+  animation: ambient-loss-pulse 3.5s ease-in-out infinite alternate;
+}
+
+/* Enhanced glow in dark themes */
+[data-theme="dark"] .owner-profit-backdrop::before,
+[data-theme="midnight"] .owner-profit-backdrop::before,
+[data-theme="cyber"] .owner-profit-backdrop::before,
+[data-theme="amethyst"] .owner-profit-backdrop::before,
+[data-theme="coffee"] .owner-profit-backdrop::before {
+  background: radial-gradient(ellipse 75% 60% at 50% 0%, rgba(16, 185, 129, 0.24) 0%, rgba(16, 185, 129, 0.06) 60%, transparent 80%);
+}
+
+[data-theme="dark"] .owner-loss-backdrop::before,
+[data-theme="midnight"] .owner-loss-backdrop::before,
+[data-theme="cyber"] .owner-loss-backdrop::before,
+[data-theme="amethyst"] .owner-loss-backdrop::before,
+[data-theme="coffee"] .owner-loss-backdrop::before {
+  background: radial-gradient(ellipse 75% 60% at 50% 0%, rgba(244, 63, 94, 0.26) 0%, rgba(244, 63, 94, 0.07) 60%, transparent 80%);
+}
+
+@keyframes ambient-loss-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}

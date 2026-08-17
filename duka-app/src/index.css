@@ -1,0 +1,321 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 1. Light (Default Duka Emerald) */
+  :root, [data-theme="light"] {
+    --bg-app: #f7f8f7;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-subtle: #f5f5f4;
+    --bg-subtle-hover: #e7e5e4;
+    --bg-input: #ffffff;
+    --border-main: #e7e5e4;
+    --border-subtle: #f5f5f4;
+    --text-main: #1c1917;
+    --text-muted: #57534e;
+    --text-subtle: #a8a29e;
+    --primary: #047857;
+    --primary-hover: #065f46;
+    --primary-light: #ecfdf5;
+    --primary-text: #047857;
+    --primary-border: #a7f3d0;
+    --shadow-card: 0 1px 3px rgba(28,25,23,.04), 0 8px 24px rgba(28,25,23,.03);
+    --shadow-soft: 0 10px 35px rgba(28,25,23,.07);
+    --chart-grid: #f0efed;
+    --chart-text: #a8a29e;
+    --chart-line: #059669;
+  }
+
+  /* 2. Pure White / Minimal Slate */
+  [data-theme="pure-white"] {
+    --bg-app: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --bg-subtle-hover: #e2e8f0;
+    --bg-input: #ffffff;
+    --border-main: #e2e8f0;
+    --border-subtle: #f1f5f9;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #94a3b8;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --primary-text: #1d4ed8;
+    --primary-border: #bfdbfe;
+    --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.05), 0 10px 25px rgba(15, 23, 42, 0.03);
+    --shadow-soft: 0 12px 35px rgba(15, 23, 42, 0.08);
+    --chart-grid: #f1f5f9;
+    --chart-text: #94a3b8;
+    --chart-line: #2563eb;
+  }
+
+  /* 3. Sunset / Savannah Amber */
+  [data-theme="sunset"] {
+    --bg-app: #fbf7f0;
+    --bg-surface: #fffdfa;
+    --bg-surface-elevated: #ffffff;
+    --bg-subtle: #f5ebe0;
+    --bg-subtle-hover: #eddccb;
+    --bg-input: #fffcf8;
+    --border-main: #e8dacf;
+    --border-subtle: #f2e8df;
+    --text-main: #2b1d14;
+    --text-muted: #6e584a;
+    --text-subtle: #9c887a;
+    --primary: #c2410c;
+    --primary-hover: #9a3412;
+    --primary-light: #ffedd5;
+    --primary-text: #c2410c;
+    --primary-border: #fed7aa;
+    --shadow-card: 0 2px 10px rgba(67, 34, 13, 0.04), 0 8px 25px rgba(67, 34, 13, 0.03);
+    --shadow-soft: 0 10px 35px rgba(67, 34, 13, 0.08);
+    --chart-grid: #f0e6dd;
+    --chart-text: #a8998d;
+    --chart-line: #ea580c;
+  }
+
+  /* 4. Matcha Zen / Herbal */
+  [data-theme="matcha"] {
+    --bg-app: #f4f6f0;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-subtle: #e9eee3;
+    --bg-subtle-hover: #dce3d4;
+    --bg-input: #ffffff;
+    --border-main: #dce3d4;
+    --border-subtle: #eef2e9;
+    --text-main: #1e291e;
+    --text-muted: #4d5e4b;
+    --text-subtle: #829680;
+    --primary: #2e7d32;
+    --primary-hover: #1b5e20;
+    --primary-light: #e8f5e9;
+    --primary-text: #2e7d32;
+    --primary-border: #c8e6c9;
+    --shadow-card: 0 2px 8px rgba(46, 125, 50, 0.04), 0 8px 24px rgba(46, 125, 50, 0.03);
+    --shadow-soft: 0 10px 35px rgba(46, 125, 50, 0.07);
+    --chart-grid: #e9eee3;
+    --chart-text: #829680;
+    --chart-line: #2e7d32;
+  }
+
+  /* 5. Nordic Glacier */
+  [data-theme="nordic"] {
+    --bg-app: #f0f7ff;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-subtle: #e0effe;
+    --bg-subtle-hover: #bae0fd;
+    --bg-input: #ffffff;
+    --border-main: #c7e2fe;
+    --border-subtle: #e8f3ff;
+    --text-main: #0c2340;
+    --text-muted: #3b5a80;
+    --text-subtle: #7498c2;
+    --primary: #0284c7;
+    --primary-hover: #0369a1;
+    --primary-light: #e0f2fe;
+    --primary-text: #0284c7;
+    --primary-border: #bae6fd;
+    --shadow-card: 0 2px 8px rgba(2, 132, 199, 0.05), 0 8px 24px rgba(2, 132, 199, 0.04);
+    --shadow-soft: 0 10px 35px rgba(2, 132, 199, 0.08);
+    --chart-grid: #e0effe;
+    --chart-text: #7498c2;
+    --chart-line: #0284c7;
+  }
+
+  /* 6. Dark (Onyx Emerald) */
+  [data-theme="dark"] {
+    --bg-app: #090d16;
+    --bg-surface: #111827;
+    --bg-surface-elevated: #162032;
+    --bg-subtle: #1a2436;
+    --bg-subtle-hover: #223046;
+    --bg-input: #141c2b;
+    --border-main: #223049;
+    --border-subtle: #172133;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-subtle: #64748b;
+    --primary: #10b981;
+    --primary-hover: #059669;
+    --primary-light: rgba(16, 185, 129, 0.15);
+    --primary-text: #34d399;
+    --primary-border: rgba(16, 185, 129, 0.35);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.5);
+    --chart-grid: #1e293b;
+    --chart-text: #64748b;
+    --chart-line: #10b981;
+  }
+
+  /* 7. Midnight Indigo */
+  [data-theme="midnight"] {
+    --bg-app: #060913;
+    --bg-surface: #0c1222;
+    --bg-surface-elevated: #131c33;
+    --bg-subtle: #152038;
+    --bg-subtle-hover: #1e2c4c;
+    --bg-input: #0f1629;
+    --border-main: #1d2a4a;
+    --border-subtle: #131d33;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-subtle: #64748b;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59, 130, 246, 0.16);
+    --primary-text: #60a5fa;
+    --primary-border: rgba(59, 130, 246, 0.35);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.6);
+    --chart-grid: #17223b;
+    --chart-text: #64748b;
+    --chart-line: #3b82f6;
+  }
+
+  /* 8. Cyber Neon */
+  [data-theme="cyber"] {
+    --bg-app: #030712;
+    --bg-surface: #0a0f1d;
+    --bg-surface-elevated: #10182c;
+    --bg-subtle: #152038;
+    --bg-subtle-hover: #1e2e4e;
+    --bg-input: #0c1324;
+    --border-main: #1e293b;
+    --border-subtle: #111827;
+    --text-main: #f8fafc;
+    --text-muted: #9ca3af;
+    --text-subtle: #6b7280;
+    --primary: #06b6d4;
+    --primary-hover: #0891b2;
+    --primary-light: rgba(6, 182, 212, 0.16);
+    --primary-text: #22d3ee;
+    --primary-border: rgba(6, 182, 212, 0.35);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.55);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.65);
+    --chart-grid: #162036;
+    --chart-text: #6b7280;
+    --chart-line: #06b6d4;
+  }
+
+  /* 9. Amethyst Dream */
+  [data-theme="amethyst"] {
+    --bg-app: #0d0814;
+    --bg-surface: #171024;
+    --bg-surface-elevated: #201732;
+    --bg-subtle: #231838;
+    --bg-subtle-hover: #2f214d;
+    --bg-input: #1b122c;
+    --border-main: #2d1f47;
+    --border-subtle: #1d1230;
+    --text-main: #faf5ff;
+    --text-muted: #c084fc;
+    --text-subtle: #8b7aa6;
+    --primary: #a855f7;
+    --primary-hover: #9333ea;
+    --primary-light: rgba(168, 85, 247, 0.18);
+    --primary-text: #c084fc;
+    --primary-border: rgba(168, 85, 247, 0.38);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.55);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.65);
+    --chart-grid: #231838;
+    --chart-text: #8b7aa6;
+    --chart-line: #a855f7;
+  }
+
+  /* 10. Artisan Café (Coffee & Mocha) */
+  [data-theme="coffee"] {
+    --bg-app: #150f0c;
+    --bg-surface: #1f1612;
+    --bg-surface-elevated: #281d18;
+    --bg-subtle: #2c201a;
+    --bg-subtle-hover: #3b2c24;
+    --bg-input: #231914;
+    --border-main: #3d2c23;
+    --border-subtle: #261a14;
+    --text-main: #fdf8f5;
+    --text-muted: #d4b8a5;
+    --text-subtle: #997e6e;
+    --primary: #d97706;
+    --primary-hover: #b45309;
+    --primary-light: rgba(217, 119, 6, 0.18);
+    --primary-text: #fbbf24;
+    --primary-border: rgba(217, 119, 6, 0.38);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.55);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.65);
+    --chart-grid: #2c201a;
+    --chart-text: #997e6e;
+    --chart-line: #d97706;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body, #root {
+    margin: 0;
+    min-height: 100%;
+    width: 100%;
+    background: var(--bg-app);
+    color: var(--text-main);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  body {
+    min-width: 320px;
+    background: var(--bg-app);
+    color: var(--text-main);
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--primary-light);
+    color: var(--primary-text);
+  }
+}
+
+@layer components {
+  .duka-shell {
+    background: radial-gradient(circle at top right, var(--primary-light), transparent 36%), var(--bg-app);
+    min-height: 100vh;
+    color: var(--text-main);
+    transition: background 0.3s ease;
+  }
+
+  .duka-sidebar {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-main) !important;
+    box-shadow: var(--shadow-card);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .duka-panel {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-main) !important;
+    box-shadow: var(--shadow-card);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+}
+
+/* Small-screen fallback for responsive layout */
+@media (max-width: 900px) {
+  .duka-responsive-main { padding: 1rem !important; }
+}
+
+@media (max-width: 720px) {
+  .duka-responsive-sidebar { width: 72px !important; }
+  .duka-sidebar-label { display: none !important; }
+  .duka-sidebar-brand-sub { display: none !important; }
+  .duka-sidebar-brand { justify-content: center !important; }
+  .duka-nav-button { justify-content: center !important; padding-left: .75rem !important; padding-right: .75rem !important; }
+}
